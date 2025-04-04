@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-react
+  template:
+    metadata:
+      labels:
+        app: redis-react
+    spec:
+      containers:
+      - name: redis-react
+        image: redis-react
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80  
+        env:
+        - name: URL
+          value: "http://node-redis.default.svc.cluster.local:8080"
