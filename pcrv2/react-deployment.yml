@@ -1,0 +1,49 @@
+# frontend-final.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_API_URL: "" # Remplacé par le script
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        image: theleurki/redis-react:1.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_API_URL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: front
+  ports:
+  - name: http       # Ajout du nom explicite
+    protocol: TCP    # Spécification du protocole
+    port: 80         # Port externe
+    targetPort: 3000 # Port du conteneur
