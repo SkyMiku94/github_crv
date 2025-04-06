@@ -1,34 +1,38 @@
-Le script mache pas mdr
-mais les commandes sont juste il faut juste que tu le lance a la mano
+# Getting Started 
 
+This project is a uni project
 
-prometheus / grafana 
+## Available Scripts
 
-kubectl apply -f prometheus.yml
-kubectl apply -f grafana.yml
+In the project directory, run:
 
-VOIR COURS 8 pour plus d'approfondissement
-connexion :
-login : admin / mdp admin
-et le set up bah faut faire soi meme i guess vu que je sais pas comment le faire en auto XD
+### `minikube start`
 
-pour le data source  dans grafana :
+if minikube doesn't work install it on:
 
-url = soit http://localhost:9090 soit  http://prometheus.default.svc.cluster.local:9090
-( optionnel pour le moment d'apres ce que j'ai crompris du mail sur whatsapp , je te laisse confirmer)
-pour les dashboard il faudra importer pour plus de simplicité :
-tu check des codes grafana quoi
+https://minikube.sigs.k8s.io/docs/start/
 
-il faudra edit les N/A avec des query qu'on peut utiliser 
+### `./start.sh`
 
+This script will setup the cluster and all the files needed.  
 
+When it prompt "**En attente de l'IP externe...**"  you will need to run in  another terminal:
 
----
-CE qu'il doit nous rester a faire je suppose :
--persistance des données dans la database ( donc utiliser un volume)
--faire des redis/replicas de la base de donné si j'ai bien compris le sujet ? ( y a un yml dans github_crv/database/ pour redis-replica)
--le rapport pdf 
--le script bash
--un readme pour indiquer quel script lancé...
+### `minikube tunnel`
 
-PS : ton front se down tout seul de mon coté donc j ai laisser tomber ( je sais pas la raison)
+do `kubectl get svc` to see the ip address used by the tunnel with the port number.
+
+### `./shutdown.sh`
+
+This script will delete minikube container.
+
+## In case the external IP is on 127.0.0.1:
+
+Open [http://localhost:8080](http://localhost:8080) for the backend 
+
+Open [http://localhost:3000](http://localhost:3000) for grafana
+
+Open [http://localhost:9090](http://localhost:9090) for prometheus
+
+Open [http://localhost:80](http://localhost:80) for the frontend
+
